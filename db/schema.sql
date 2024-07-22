@@ -65,6 +65,44 @@ ALTER TABLE public.invoice_statuses ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 
 
 --
+-- Name: invoices; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invoices (
+    id integer NOT NULL,
+    invoice_status_id integer DEFAULT 1 NOT NULL,
+    invoice_code character varying(255) NOT NULL,
+    description character varying(255),
+    payment_method character varying(255),
+    po_code character varying(255),
+    seller character varying(255),
+    platform_number character varying(255),
+    platform character varying(255),
+    platform_description character varying(255),
+    tax integer,
+    notes character varying(255),
+    facture_path character varying(255),
+    po_path character varying(255),
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
+);
+
+
+--
+-- Name: invoices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.invoices ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.invoices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: products; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -177,6 +215,14 @@ ALTER TABLE ONLY public.invoice_statuses
 
 
 --
+-- Name: invoices invoices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invoices
+    ADD CONSTRAINT invoices_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -209,6 +255,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: invoices invoices_invoice_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invoices
+    ADD CONSTRAINT invoices_invoice_status_id_fkey FOREIGN KEY (invoice_status_id) REFERENCES public.invoice_statuses(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: purchases purchases_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -230,4 +284,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240722053345'),
     ('20240722102339'),
     ('20240722173157'),
-    ('20240722173536');
+    ('20240722173536'),
+    ('20240722174245');
