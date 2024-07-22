@@ -14,6 +14,33 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: clients; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.clients (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    place character varying(255),
+    description character varying(255),
+    telephone character varying(255)
+);
+
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.clients ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: products; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -110,6 +137,14 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -161,4 +196,5 @@ ALTER TABLE ONLY public.purchases
 INSERT INTO public.schema_migrations (version) VALUES
     ('20240720151325'),
     ('20240722053345'),
-    ('20240722102339');
+    ('20240722102339'),
+    ('20240722173157');
