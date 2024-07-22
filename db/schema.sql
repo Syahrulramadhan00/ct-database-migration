@@ -41,6 +41,30 @@ ALTER TABLE public.clients ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: invoice_statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.invoice_statuses (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+--
+-- Name: invoice_statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.invoice_statuses ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.invoice_statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: products; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -145,6 +169,14 @@ ALTER TABLE ONLY public.clients
 
 
 --
+-- Name: invoice_statuses invoice_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invoice_statuses
+    ADD CONSTRAINT invoice_statuses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -197,4 +229,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240720151325'),
     ('20240722053345'),
     ('20240722102339'),
-    ('20240722173157');
+    ('20240722173157'),
+    ('20240722173536');
