@@ -4,6 +4,7 @@ create table invoice_statuses (
   name varchar(255) not null
 );
 
+INSERT INTO invoice_statuses (name) VALUES ('initialized');
 INSERT INTO invoice_statuses (name) VALUES ('finalized');
 INSERT INTO invoice_statuses (name) VALUES ('sended');
 INSERT INTO invoice_statuses (name) VALUES ('preorder_created');
