@@ -30,7 +30,11 @@ CREATE TABLE public.users (
     id integer NOT NULL,
     name character varying(255),
     email character varying(255) NOT NULL,
-    password character varying(255)
+    password character varying(255),
+    is_verified boolean DEFAULT false,
+    otp_code character varying(5),
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
