@@ -71,6 +71,7 @@ ALTER TABLE public.invoice_statuses ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 CREATE TABLE public.invoices (
     id integer NOT NULL,
     invoice_status_id integer DEFAULT 1 NOT NULL,
+    client_id integer NOT NULL,
     invoice_code character varying(255) NOT NULL,
     description character varying(255),
     payment_method character varying(255),
@@ -80,8 +81,11 @@ CREATE TABLE public.invoices (
     platform character varying(255),
     platform_description character varying(255),
     tax integer,
-    notes character varying(255),
+    discount integer,
+    deadline timestamp with time zone,
+    note character varying(255),
     facture_path character varying(255),
+    is_taxable boolean DEFAULT false,
     po_path character varying(255),
     created_at timestamp with time zone,
     updated_at timestamp with time zone
@@ -289,6 +293,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invoices invoices_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invoices
+    ADD CONSTRAINT invoices_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

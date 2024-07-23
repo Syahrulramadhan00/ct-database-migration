@@ -6,6 +6,8 @@ create table clients (
   description varchar(255),
   telephone varchar(255)
 );
+INSERT INTO clients (name) VALUES ('Sinergi');
+
 
 -- migrate:down
 DROP TABLE IF EXISTS clients;
