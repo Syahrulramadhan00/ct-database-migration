@@ -82,7 +82,7 @@ CREATE TABLE public.invoices (
     platform_description character varying(255),
     tax integer,
     discount integer,
-    deadline timestamp with time zone,
+    payment_term integer,
     note character varying(255),
     facture_path character varying(255),
     is_taxable boolean DEFAULT false,

@@ -13,7 +13,7 @@ create table invoices (
   platform_description varchar(255),
   tax integer,
   discount integer,
-  deadline TIMESTAMP WITH TIME ZONE,
+  payment_term integer,
   note varchar(255),
   facture_path varchar(255),
   is_taxable BOOLEAN DEFAULT FALSE,
