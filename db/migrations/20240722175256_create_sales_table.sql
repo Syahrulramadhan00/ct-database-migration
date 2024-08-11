@@ -5,6 +5,7 @@ create table sales (
   product_id integer not null,
   quantity integer not null,
   price integer not null,
+  not_sent_count integer DEFAULT 0,
   send_status BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP WITH TIME ZONE,
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE,

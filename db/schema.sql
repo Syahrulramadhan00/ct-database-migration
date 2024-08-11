@@ -41,6 +41,88 @@ ALTER TABLE public.clients ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: delivery_orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.delivery_orders (
+    id integer NOT NULL,
+    invoice_id integer NOT NULL,
+    sender_id integer,
+    order_code character varying(255),
+    note character varying(255),
+    place character varying(255),
+    photo_path character varying(255),
+    status integer NOT NULL,
+    created_at timestamp with time zone
+);
+
+
+--
+-- Name: delivery_orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.delivery_orders ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.delivery_orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: delivery_products; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.delivery_products (
+    id integer NOT NULL,
+    delivery_id integer NOT NULL,
+    sales_id integer NOT NULL,
+    quantity integer NOT NULL,
+    created_at timestamp with time zone
+);
+
+
+--
+-- Name: delivery_products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.delivery_products ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.delivery_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: delivery_statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.delivery_statuses (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+--
+-- Name: delivery_statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.delivery_statuses ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.delivery_statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: invoice_statuses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -173,6 +255,7 @@ CREATE TABLE public.sales (
     product_id integer NOT NULL,
     quantity integer NOT NULL,
     price integer NOT NULL,
+    not_sent_count integer DEFAULT 0,
     send_status boolean DEFAULT false,
     created_at timestamp with time zone
 );
@@ -240,6 +323,30 @@ ALTER TABLE ONLY public.clients
 
 
 --
+-- Name: delivery_orders delivery_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_orders
+    ADD CONSTRAINT delivery_orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delivery_products delivery_products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_products
+    ADD CONSTRAINT delivery_products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delivery_statuses delivery_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_statuses
+    ADD CONSTRAINT delivery_statuses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: invoice_statuses invoice_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -293,6 +400,38 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: delivery_orders delivery_orders_invoice_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_orders
+    ADD CONSTRAINT delivery_orders_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES public.invoices(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: delivery_orders delivery_orders_sender_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_orders
+    ADD CONSTRAINT delivery_orders_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: delivery_products delivery_products_delivery_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_products
+    ADD CONSTRAINT delivery_products_delivery_id_fkey FOREIGN KEY (delivery_id) REFERENCES public.delivery_orders(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: delivery_products delivery_products_sales_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delivery_products
+    ADD CONSTRAINT delivery_products_sales_id_fkey FOREIGN KEY (sales_id) REFERENCES public.sales(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -351,4 +490,7 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240722173157'),
     ('20240722173536'),
     ('20240722174245'),
-    ('20240722175256');
+    ('20240722175256'),
+    ('20240804100526'),
+    ('20240804113120'),
+    ('20240804113424');
