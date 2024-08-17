@@ -246,6 +246,59 @@ ALTER TABLE public.purchases ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: receipt_invoices; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.receipt_invoices (
+    id integer NOT NULL,
+    receipt_id integer NOT NULL,
+    invoice_id integer NOT NULL
+);
+
+
+--
+-- Name: receipt_invoices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.receipt_invoices ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.receipt_invoices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: receipts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.receipts (
+    id integer NOT NULL,
+    number integer NOT NULL,
+    photo character varying(255),
+    created_at timestamp with time zone,
+    client_id integer NOT NULL,
+    status integer NOT NULL
+);
+
+
+--
+-- Name: receipts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.receipts ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.receipts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: sales; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -379,6 +432,22 @@ ALTER TABLE ONLY public.purchases
 
 
 --
+-- Name: receipt_invoices receipt_invoices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.receipt_invoices
+    ADD CONSTRAINT receipt_invoices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: receipts receipts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.receipts
+    ADD CONSTRAINT receipts_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: sales sales_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -459,6 +528,30 @@ ALTER TABLE ONLY public.purchases
 
 
 --
+-- Name: receipt_invoices receipt_invoices_invoice_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.receipt_invoices
+    ADD CONSTRAINT receipt_invoices_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES public.invoices(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: receipt_invoices receipt_invoices_receipt_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.receipt_invoices
+    ADD CONSTRAINT receipt_invoices_receipt_id_fkey FOREIGN KEY (receipt_id) REFERENCES public.receipts(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: receipts receipts_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.receipts
+    ADD CONSTRAINT receipts_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: sales sales_invoice_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -493,4 +586,6 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20240722175256'),
     ('20240804100526'),
     ('20240804113120'),
-    ('20240804113424');
+    ('20240804113424'),
+    ('20240817022844'),
+    ('20240817023654');
