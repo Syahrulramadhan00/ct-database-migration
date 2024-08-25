@@ -6,9 +6,6 @@ create table clients (
   description varchar(255),
   telephone varchar(255)
 );
-INSERT INTO clients (name) VALUES ('Sinergi');
-INSERT INTO clients (name) VALUES ('RWK');
-INSERT INTO clients (name) VALUES ('ikanindo');
 
 
 -- migrate:down

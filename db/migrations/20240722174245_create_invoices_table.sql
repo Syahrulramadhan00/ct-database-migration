@@ -20,10 +20,13 @@ create table invoices (
   po_path varchar(255),
   created_at TIMESTAMP WITH TIME ZONE,
   updated_at TIMESTAMP WITH TIME ZONE,
+  project_name VARCHAR(255),
+  total_price INTEGER,
+  date TIMESTAMP WITH TIME ZONE,
+  CONSTRAINT unique_facture_path UNIQUE (facture_path),
   FOREIGN KEY (invoice_status_id) REFERENCES invoice_statuses(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- migrate:down
 DROP TABLE IF EXISTS invoices;
-

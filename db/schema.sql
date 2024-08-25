@@ -170,7 +170,10 @@ CREATE TABLE public.invoices (
     is_taxable boolean DEFAULT false,
     po_path character varying(255),
     created_at timestamp with time zone,
-    updated_at timestamp with time zone
+    updated_at timestamp with time zone,
+    project_name character varying(255),
+    total_price integer,
+    date timestamp with time zone
 );
 
 
@@ -461,6 +464,14 @@ ALTER TABLE ONLY public.sales
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: invoices unique_facture_path; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.invoices
+    ADD CONSTRAINT unique_facture_path UNIQUE (facture_path);
 
 
 --
