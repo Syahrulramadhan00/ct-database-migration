@@ -39,7 +39,7 @@ async function seed(client) {
             for (let i = 0; i < minRecordsPerMonth; i++) {
                 const invoiceStatusId = faker.helpers.arrayElement(invoiceStatuses.rows).id;
                 const clientId = faker.helpers.arrayElement(clients.rows).id;
-                const invoiceCode = faker.string.alphanumeric(10);
+                const invoiceCode = faker.number.int({ min: 100000, max: 999999 }).toString();
                 const description = faker.lorem.sentence();
                 const paymentMethod = faker.helpers.arrayElement(['Cash', 'Credit Card', 'Bank Transfer']);
                 const poCode = faker.string.alphanumeric(8);
@@ -87,7 +87,7 @@ async function seed(client) {
 
             const invoiceStatusId = faker.helpers.arrayElement(invoiceStatuses.rows).id;
             const clientId = faker.helpers.arrayElement(clients.rows).id;
-            const invoiceCode = faker.number.int({ min: 1000000000, max: 9999999999 }).toString();
+            const invoiceCode = faker.number.int({ min: 100000, max: 999999 }).toString();
             const description = faker.lorem.sentence();
             const paymentMethod = faker.helpers.arrayElement(['Cash', 'Credit Card', 'Bank Transfer']);
             const poCode = faker.string.alphanumeric(8);
