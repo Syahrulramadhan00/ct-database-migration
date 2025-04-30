@@ -15,6 +15,7 @@ const seeders = [
     'productsSeeder.js',
     'invoicesSeeder.js',
     'salesSeeder.js',
+    'suppliersSeeder.js',
     'purchasesSeeder.js',
     'receiptsSeeder.js',
     'receiptInvoicesSeeder.js',

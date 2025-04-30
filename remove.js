@@ -24,7 +24,8 @@ const tables = [
     'purchases',
     'products',
     'schema_migrations',
-    'users'
+    'users',
+    'suppliers'
 ];
 
 async function dropTables() {

@@ -20,6 +20,7 @@ async function seed(client) {
         // Generate 5 records for this month
         for (let i = 0; i < 5; i++) {
             const productId = faker.number.int({ min: 1, max: 10 });
+            const supplierId = faker.number.int({ min: 1, max: 10 }); // Ensure supplier_id is set
             const imagePath = faker.image.url();
             const count = faker.number.int({ min: 1, max: 50 });
             const price = faker.number.int({ min: 1, max: 100 }) * 1000;
@@ -30,9 +31,9 @@ async function seed(client) {
             const isPaid = faker.datatype.boolean();
 
             await client.query(
-                `INSERT INTO purchases (product_id, image_path, count, price, created_at, is_paid) 
-                 VALUES ($1, $2, $3, $4, $5, $6)`,
-                [productId, imagePath, count, price, createdAt, isPaid]
+                `INSERT INTO purchases (product_id, supplier_id, image_path, count, price, created_at, is_paid) 
+                 VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                [productId, supplierId, imagePath, count, price, createdAt, isPaid]
             );
         }
     }
